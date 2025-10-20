@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JioCinema - Stream Movies, TV Shows & Live Sports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+     <!-- <link rel="stylesheet" href="style jio.js"> -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #3b82f6;
+            --background-dark: #0f0f23;
+            --background-card: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: #2d2d3a;
+            --gradient-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .search-container {
+            position: relative;
+            margin-right: 1rem;
+        }
+
+        .search-input {
+            background: var(--background-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            color: var(--text-primary);
+            width: 300px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .user-profile {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-bg);
+            padding: 4rem 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #5856eb;
+        }
+
+        .btn-secondary {
+            background: var(--background-card);
+            color: var(--text-secondary);
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 3rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .view-all {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Carousel */
+        .carousel {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel-content {
+            display: flex;
+            gap: 1.5rem;
+            padding-bottom: 1rem;
+        }
+
+        .movie-card {
+            flex-shrink: 0;
+            width: 200px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .movie-info {
+            padding: 0.75rem 0;
+        }
+
+        .movie-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .movie-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Grid Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .content-card {
+            background: var(--background-card);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .content-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge.live {
+            background: #ef4444;
+        }
+
+        .badge.upcoming {
+            background: #10b981;
+        }
+
+        /* Continue Watching */
+        .watch-card {
+            position: relative;
+            background: var(--background-card);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .watch-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .progress-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 0.75rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+        }
+
+        .progress-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--background-card);
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--background-dark);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .search-input {
+                width: 150px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <div class="logo-icon">▶</div>
+                    <span>JioCinema</span>
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">Sports</a></li>
+                    <li><a href="#">Kids</a></li>
+                    <li><a href="#">Premium</a></li>
+                </ul>
+
+                <div style="display: flex; align-items: center;">
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search movies, shows...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="user-profile">👤</div>
+                    <button class="mobile-menu-toggle">☰</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <span class="badge">Featured Movie</span>
+                    <h1>Pathaan</h1>
+                    <p>An action-packed thriller starring Shah Rukh Khan as a RAW agent on a mission to save the nation. Experience the ultimate entertainment with stunning visuals and gripping storyline.</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary">▶ Play Now</button>
+                        <button class="btn-secondary">+ My List</button>
+                    </div>
+                    <div class="hero-meta">
+                        <span>2023</span>
+                        <span>2h 26m</span>
+                        <span>Action, Thriller</span>
+                        <span class="badge" style="background: #fbbf24; color: black;">HD</span>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1200" alt="Pathaan Movie Poster">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Movies -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Trending Movies</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            <div class="carousel">
+                <div class="carousel-content">
+                    <div class="movie-card">
+                        <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?auto=format&fit=crop&w=400&h=600" alt="Movie">
+                        <div class="movie-info">
+                            <div class="movie-title">Yeh Jawaani Hai Deewani</div>
+                            <div class="movie-meta">2013 • Romance</div>
+                        </div>
+                    </div>
+                    <div class="movie-card">
+                        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=400&h=600" alt="Movie">
+                        <div class="movie-info">
+                            <div class="movie-title">Dangal</div>
+                            <div class="movie-meta">2016 • Drama, Sports</div>
+                        </div>
+                    </div>
+                    <div class="movie-card">
+                        <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=400&h=600" alt="Movie">
+                        <div class="movie-info">
+                            <div class="movie-title">Andhadhun</div>
+                            <div class="movie-meta">2018 • Thriller</div>
+                        </div>
+                    </div>
+                    <div class="movie-card">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=400&h=600" alt="Movie">
+                        <div class="movie-info">
+                            <div class="movie-title">Padmaavat</div>
+                            <div class="movie-meta">2018 • Drama, History</div>
+                        </div>
+                    </div>
+                    <div class="movie-card">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&h=600" alt="Movie">
+                        <div class="movie-info">
+                            <div class="movie-title">Stree</div>
+                            <div class="movie-meta">2018 • Comedy, Horror</div>
+                        </div>
+                    </div>
+                    <div class="movie-card">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=400&h=600" alt="Movie">
+                        <div class="movie-info">
+                            <div class="movie-title">Gully Boy</div>
+                            <div class="movie-meta">2019 • Drama, Music</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Web Series -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Popular Web Series</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=600&h=400" alt="Sacred Games">
+                    <div class="card-content">
+                        <div class="card-title">Sacred Games</div>
+                        <div class="card-meta">Crime, Thriller</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&h=400" alt="Made in Heaven">
+                    <div class="card-content">
+                        <div class="card-title">Made in Heaven</div>
+                        <div class="card-meta">Drama, Romance</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=600&h=400" alt="The Family Man">
+                    <div class="card-content">
+                        <div class="card-title">The Family Man</div>
+                        <div class="card-meta">Action, Comedy</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&h=400" alt="Scam 1992">
+                    <div class="card-content">
+                        <div class="card-title">Scam 1992</div>
+                        <div class="card-meta">Drama, Biography</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sports Live & Highlights -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sports Live & Highlights</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=600&h=400" alt="Cricket">
+                    <div class="card-content">
+                        <span class="badge live">LIVE</span>
+                        <div class="card-title">India vs Australia</div>
+                        <div class="card-meta">Cricket • T20 World Cup</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Live from Melbourne</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=600&h=400" alt="Football">
+                    <div class="card-content">
+                        <span class="badge">HIGHLIGHTS</span>
+                        <div class="card-title">Manchester United vs Liverpool</div>
+                        <div class="card-meta">Football • Premier League</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Best moments</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=600&h=400" alt="Tennis">
+                    <div class="card-content">
+                        <span class="badge upcoming">UPCOMING</span>
+                        <div class="card-title">Wimbledon Finals</div>
+                        <div class="card-meta">Tennis • Grand Slam</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Tomorrow 3:30 PM</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&h=400" alt="Kabaddi">
+                    <div class="card-content">
+                        <span class="badge" style="background: #f97316;">REPLAY</span>
+                        <div class="card-title">Pro Kabaddi League</div>
+                        <div class="card-meta">Kabaddi • PKL Season 10</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Full match replay</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Continue Watching -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Continue Watching</h2>
+            <div class="content-grid">
+                <div class="watch-card">
+                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&h=400" alt="Tiger 3">
+                    <div class="progress-overlay">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                        <div style="color: white; font-weight: 600;">Tiger 3</div>
+                        <div class="progress-text">1h 23m remaining • 65% watched</div>
+                    </div>
+                </div>
+                <div class="watch-card">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=600&h=400" alt="Sacred Games">
+                    <div class="progress-overlay">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 20%;"></div>
+                        </div>
+                        <div style="color: white; font-weight: 600;">Sacred Games S2E3</div>
+                        <div class="progress-text">35m remaining • 20% watched</div>
+                    </div>
+                </div>
+                <div class="watch-card">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&h=400" alt="Kapil Sharma">
+                    <div class="progress-overlay">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%;"></div>
+                        </div>
+                        <div style="color: white; font-weight: 600;">Kapil Sharma Show</div>
+                        <div class="progress-text">8m remaining • 85% watched</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo" style="margin-bottom: 1rem;">
+                        <div class="logo-icon">▶</div>
+                        <span>JioCinema</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Stream the latest movies, TV shows, and live sports. Watch anytime, anywhere.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📷</a>
+                        <a href="#" class="social-link">📺</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Browse</h3>
+                    <ul>
+                        <li><a href="#">Movies</a></li>
+                        <li><a href="#">TV Shows</a></li>
+                        <li><a href="#">Web Series</a></li>
+                        <li><a href="#">Sports</a></li>
+                        <li><a href="#">Kids</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Preferences</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Download App</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="background: var(--background-dark); padding: 0.75rem; border-radius: 8px; cursor: pointer;">
+                            <div style="font-size: 0.75rem; color: var(--text-secondary);">Download on the</div>
+                            <div style="font-weight: 600;">App Store</div>
+                        </div>
+                        <div style="background: var(--background-dark); padding: 0.75rem; border-radius: 8px; cursor: pointer;">
+                            <div style="font-size: 0.75rem; color: var(--text-secondary);">Get it on</div>
+                            <div style="font-weight: 600;">Google Play</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 JioCinema. All rights reserved. A Reliance Entertainment product.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+
+
+
+
+    
+</body>
+</html>
